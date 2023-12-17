@@ -1,3 +1,9 @@
+const host = "https://127.0.0.1"; // default appium host
+const port = 4725; // default appium port
+
+const waitforTimeout = 30 * 60000;
+const commandTimeout = 30 * 60000;
+
 exports.config = {
   //
   // ====================
@@ -62,6 +68,46 @@ exports.config = {
       // excludeDriverLogs: ['bugreport', 'server'],
     },
   ],
+
+  host: host,
+  port: port,
+
+  maxInstances: 10,
+
+  capabilities: [
+    {
+      //browserName: "chrome", // browser name should be specified
+      appPackage: "com.wam.android.alpha",
+      appWaitActivity:
+        "com.wam.android.login.PreLoginActivity,com.wam.android.authentication.mvp.views.PreLoginActivity,com.wam.android.navigation.mvp.views.NavigationActivity",
+      platformName: "Android",
+      platformVersion: "8.0",
+      deviceName: "Moto Z Play", // device name is mandatory
+      automationName: "UiAutomator2",
+      //udid: "192.168.1.2:5555",
+      app: "/Users/sivareddyk/Documents/wa-automation/lifeworks.apk",
+      //browserName: "chrome",
+      waitforTimeout: waitforTimeout,
+      commandTimeout: commandTimeout,
+      newCommandTimeout: 30 * 60000,
+      //w3c: true,
+    },
+  ],
+
+  services: ["appium"],
+  appium: {
+    waitStartTime: 6000,
+    waitforTimeout: waitforTimeout,
+    command: "appium",
+    logFileName: "appium.log",
+    args: {
+      address: host,
+      port: port,
+      commandTimeout: commandTimeout,
+      sessionOverride: true,
+      debugLogSpacing: true,
+    },
+  },
   //
   // ===================
   // Test Configurations
@@ -70,6 +116,7 @@ exports.config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel: "info",
+  path: "/wd/hub/",
   //
   // Set specific log levels per logger
   // loggers:
@@ -115,7 +162,7 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ["chromedriver"],
+  ////////services: ["chromedriver"],
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
